@@ -9,7 +9,7 @@ function Routine() {
   useEffect(() => {
     const fetchRoutines = async () => {
       try {
-        const response = await axios.get("roodobackend-production.up.railway.app/api/routine");
+        const response = await axios.get("https://roodobackend-production.up.railway.app/api/routine");
         setRoutines(response.data);
       } catch (error) {
         console.error("Error fetching routines:", error);
@@ -28,7 +28,7 @@ function Routine() {
     // Update the database with the new state
     try {
       console.log(updatedRoutines[index]._id);
-      await axios.put(`roodobackend-production.up.railway.app/api/routine/${updatedRoutines[index]._id}`, updatedRoutines[index]);
+      await axios.put(`https://roodobackend-production.up.railway.app/api/routine/${updatedRoutines[index]._id}`, updatedRoutines[index]);
     } catch (error) {
       console.error("Error updating routine:", error);
     }

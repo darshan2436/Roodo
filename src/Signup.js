@@ -27,7 +27,7 @@ function Signup() {
     };
 
     try {
-      const response = await fetch('roodobackend-production.up.railway.app/api/auth/signup', {
+      const response = await fetch('https://roodobackend-production.up.railway.app/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

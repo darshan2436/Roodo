@@ -12,7 +12,7 @@ function AddTodo() {
 
   //add email to the todo
 
-  const API_URL = "roodobackend-production.up.railway.app/api/todo"; // Backend endpoint
+  const API_URL = "https://roodobackend-production.up.railway.app/api/todo"; // Backend endpoint
 
   const handleAddTodo = async () => {
     if (!title || !deadlineDate || !deadlineTime) {

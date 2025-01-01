@@ -27,7 +27,7 @@ function AddRoutine() {
 
     try {
       // Send the routine to the backend
-      await axios.post("roodobackend-production.up.railway.app/api/routine", newRoutine);
+      await axios.post("https://roodobackend-production.up.railway.app/api/routine", newRoutine);
 
       // Navigate back to the Routine list page
       navigate("/routine");

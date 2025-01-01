@@ -3,7 +3,7 @@
 ## Initial Version for Roodo web for checking my all the routine and todos
 
 ## Need to update: (bugs)
-### 1.add email to the datas
+### 1.add email to the datas {done}
 ### 2.differentiate datas according to id,email
 ### 3.after checking the completed checkbox update new data into database
 

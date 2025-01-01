@@ -45,28 +45,21 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+//update todo for completed and punishment
 router.put('/:id', async (req, res) => {
   const { id } = req.params; // Correct parameter extraction
-  const { punishment } = req.body;
+  const { isCompleted, punishment } = req.body;
 
-  try {
-    const updatedTodo = await Todo.findByIdAndUpdate(
-      id,
-      { $set: { punishment } },
-      { new: true }
-    );
-
-    if (!updatedTodo) {
+  try{
+    const updated = await Todo.findByIdAndUpdate(id, { $set: { isCompleted, punishment } }, { new: true });
+    if (!updated) {
       return res.status(404).json({ message: 'Todo not found' });
     }
-
-    res.status(200).json(updatedTodo);
-  } catch (err) {
-    console.error('Error updating todo:', err);
-    res.status(500).json({ message: 'Failed to update todo' });
+    res.json(updated);
+  }catch(err){
+    res.status(500).json({ msg: 'Server error' });
   }
 });
-
 
 
 module.exports = router;

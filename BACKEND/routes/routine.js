@@ -32,6 +32,28 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Update Routine
+router.put('/:id', async (req, res) => {
+  const { id } = req.params; // Correct parameter extraction
+  const { completed } = req.body;
+
+  try {
+    const updatedRoutine = await Routine.findByIdAndUpdate(
+      id,
+      { $set: { completed } },
+      { new: true }
+    );
+
+    if (!updatedRoutine) {
+      return res.status(404).json({ message: 'Routine not found' });
+    }
+
+    res.json(updatedRoutine);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 // Delete Routine
 router.delete('/:id', async (req, res) => {
   try {

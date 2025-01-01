@@ -4,7 +4,8 @@ import axios from "axios";
 
 function AddTodo() {
   const [title, setTitle] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [deadlineDate, setDeadlineDate] = useState("");
+  const [deadlineTime, setDeadlineTime] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false); // Optional success state
   const navigate = useNavigate();
@@ -14,14 +15,14 @@ function AddTodo() {
   const API_URL = "http://localhost:4040/api/todo"; // Backend endpoint
 
   const handleAddTodo = async () => {
-    if (!title || !deadline) {
+    if (!title || !deadlineDate || !deadlineTime) {
       setError("Both title and deadline are required!");
       return;
     }
 
     const newTodo = {
       title,
-      deadline: new Date(deadline),
+      deadline: new Date(deadlineDate+"T"+deadlineTime),
       added: new Date(),
       completedAt: null,
       punishment: "",
@@ -58,9 +59,17 @@ function AddTodo() {
       </div>
       <div className="mb-4">
         <input
-          type="datetime-local"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
+          type="date"
+          value={deadlineDate}
+          onChange={(e) => setDeadlineDate(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+      </div>
+      <div className="mb-4">
+        <input
+          type="time"
+          value={deadlineTime}
+          onChange={(e) => setDeadlineTime(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
       </div>

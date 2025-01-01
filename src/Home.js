@@ -20,7 +20,7 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center ">
       <h1 className="text-4xl font-bold mb-8">Welcome to Your Dashboard</h1>
       <p className="text-lg mb-12 text-center max-w-2xl">
         Manage your daily routine and tasks effortlessly. {isLoggedIn ? "Enjoy your personalized dashboard." : "Sign up or log in to get started."}

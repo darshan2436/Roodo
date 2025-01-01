@@ -9,7 +9,7 @@ function Routine() {
   useEffect(() => {
     const fetchRoutines = async () => {
       try {
-        const response = await axios.get("http://localhost:4040/api/routine");
+        const response = await axios.get("roodobackend-production.up.railway.app/api/routine");
         setRoutines(response.data);
       } catch (error) {
         console.error("Error fetching routines:", error);
@@ -28,7 +28,7 @@ function Routine() {
     // Update the database with the new state
     try {
       console.log(updatedRoutines[index]._id);
-      await axios.put(`http://localhost:4040/api/routine/${updatedRoutines[index]._id}`, updatedRoutines[index]);
+      await axios.put(`roodobackend-production.up.railway.app/api/routine/${updatedRoutines[index]._id}`, updatedRoutines[index]);
     } catch (error) {
       console.error("Error updating routine:", error);
     }
@@ -39,7 +39,7 @@ function Routine() {
     const enteredPassword = prompt("Are sure to delete ? Enter y/Y to confirm:");
     if (enteredPassword === "y" || enteredPassword === "Y") {
       try {
-        await axios.delete(`http://localhost:4040/api/routine/${id}`);
+        await axios.delete(`roodobackend-production.up.railway.app/api/routine/${id}`);
         setRoutines(routines.filter((routine) => routine._id !== id));
         alert("Routine deleted successfully!");
       } catch (error) {

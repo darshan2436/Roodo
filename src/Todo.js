@@ -8,7 +8,7 @@ function Todo() {
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const API_URL = "http://localhost:4040/api/todo";
+  const API_URL = "roodobackend-production.up.railway.app/api/todo";
 
   const punishments = [
     "Do 10 push-ups",

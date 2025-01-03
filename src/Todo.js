@@ -7,6 +7,7 @@ function Todo() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const email = localStorage.getItem("email");
 
   const API_URL = "https://roodobackend-production.up.railway.app/api/todo";
 
@@ -22,7 +23,7 @@ function Todo() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(API_URL,email);
         if(!response){
           throw new Error("No response from the server");
         }

@@ -23,11 +23,13 @@ function Todo() {
     const fetchTodos = async () => {
       try {
         const response = await axios.get(API_URL);
+        if(!response){
+          throw new Error("No response from the server");
+        }
         setTodos(response.data);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching todos:", err);
-        setError("Failed to fetch todos. Please try again later.");
+        setError(err.message + " in datatbase" || "Failed to fetch todos. Please try again.");
         setLoading(false);
       }
     };
@@ -97,7 +99,7 @@ function Todo() {
   }
 
   if (error) {
-    return <p className="text-red-500">{error}</p>;
+    return <p className="text-red-500 text-center text-3xl font-serif">{error}</p>;
   }
 
   return (
@@ -124,7 +126,8 @@ function Todo() {
         </thead>
         <tbody>
             {/*todo is not updated in the database*/}
-          {todos.map((todo) => (
+          {
+          todos.map((todo) => (
             <tr
               key={todo._id}
               className={`text-center ${

@@ -4,15 +4,24 @@ import axios from "axios";
 
 function Routine() {
   const [routines, setRoutines] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const API_URL = "https://roodobackend-production.up.railway.app/api/routine";
 
   // Fetch routines from the database
   useEffect(() => {
     const fetchRoutines = async () => {
       try {
-        const response = await axios.get("https://roodobackend-production.up.railway.app/api/routine");
+        const response = await axios.get(API_URL);
+        if(!response){
+          throw new Error("No response from the server");
+        }
         setRoutines(response.data);
-      } catch (error) {
-        console.error("Error fetching routines:", error);
+        setLoading(false);
+      } catch (err) {
+        Error("Failed to fetch routines. Please try again.");
+        setLoading(false);
+        setError(err.message + " in database" || "Failed to fetch routines. Please try again.");
       }
     };
     fetchRoutines();
@@ -49,6 +58,14 @@ function Routine() {
       alert("Routine deletion cancelled.");
     }
   };
+
+  if (loading) {
+    return <p>Loading todos...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500 text-center text-3xl font-serif">{error}</p>;
+  }
 
   return (
     <div className="container mx-auto p-4">

@@ -8,6 +8,7 @@ import Todo from './Todo';
 import AddTodo from './AddTodo';
 import AddRoutine from './AddRoutine';
 import Navbar from './Navbar';
+import NotFound from './NotFound';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/todo" element={<Todo />} />
           <Route path="/todo/add" element={<AddTodo />} />
           <Route path="/routine/add" element={<AddRoutine />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </div>

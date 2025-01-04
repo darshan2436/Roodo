@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Emptydata from "./Emptydata";
 
 function Todo() {
   const [todos, setTodos] = useState([]);
@@ -117,76 +118,82 @@ function Todo() {
         Add New Todo
       </Link>
 
-      <table className="min-w-full table-auto border-collapse mb-6">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="py-2 px-4 border">Completed</th>
-            <th className="py-2 px-4 border">Title</th>
-            <th className="py-2 px-4 border">Deadline</th>
-            <th className="py-2 px-4 border">Remaining Time</th>
-            <th className="py-2 px-4 border">Punishment</th>
-            <th className="py-2 px-4 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-            {/*todo is not updated in the database*/}
-          {
-          todos.map((todo) => (
-            <tr
-              key={todo._id}
-              className={`text-center ${
-                todo.isCompleted
-                  ? "bg-gray-200 text-gray-500 line-through"
-                  : "bg-white"
-              }`}
-            >
-              <td className="py-2 px-4 border">
-                <input
-                  type="checkbox"
-                  checked={todo.isCompleted}
-                  onChange={async () => {
-                    try {
-                      const updatedTodo = {
-                        ...todo,
-                        isCompleted: !todo.isCompleted,
-                      };
-                      await axios.put(`${API_URL}/${todo._id}`, updatedTodo);
-                      setTodos(
-                        todos.map((t) =>
-                          t._id === todo._id ? updatedTodo : t
-                        )
-                      );
-                    } catch (err) {
-                      console.error("Error updating todo:", err);
-                      setError("Failed to update todo. Please try again.");
-                    }
-                  }}
-                />
-              </td>
-              <td className="py-2 px-4 border">{todo.title}</td>
-              <td className="py-2 px-4 border">
-                {new Date(todo.deadline).toLocaleString()}
-              </td>
-              <td className="py-2 px-4 border">
-                {getRemainingTime(todo.deadline, todo)}
-              </td>
-              <td className="py-2 px-4 border">
-                {todo.punishment || "No punishment yet"}
-              </td>
-              <td className="py-2 px-4 border">
-                <button
-                  onClick={() => handleDeleteTodo(todo._id)}
-                  className="bg-red-600 text-white px-4 py-2 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
 
-      {passwordError && <p className="text-red-500 mt-2">{passwordError}</p>}
+      {/* Show message if no todos */}
+      {(todos.length === 0)? <Emptydata type="todo" /> :
+        <div>
+          <table className="min-w-full table-auto border-collapse mb-6">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="py-2 px-4 border">Completed</th>
+                <th className="py-2 px-4 border">Title</th>
+                <th className="py-2 px-4 border">Deadline</th>
+                <th className="py-2 px-4 border">Remaining Time</th>
+                <th className="py-2 px-4 border">Punishment</th>
+                <th className="py-2 px-4 border">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                {/*todo is not updated in the database*/}
+              {
+              todos.map((todo) => (
+                <tr
+                  key={todo._id}
+                  className={`text-center ${
+                    todo.isCompleted
+                      ? "bg-gray-200 text-gray-500 line-through"
+                      : "bg-white"
+                  }`}
+                >
+                  <td className="py-2 px-4 border">
+                    <input
+                      type="checkbox"
+                      checked={todo.isCompleted}
+                      onChange={async () => {
+                        try {
+                          const updatedTodo = {
+                            ...todo,
+                            isCompleted: !todo.isCompleted,
+                          };
+                          await axios.put(`${API_URL}/${todo._id}`, updatedTodo);
+                          setTodos(
+                            todos.map((t) =>
+                              t._id === todo._id ? updatedTodo : t
+                            )
+                          );
+                        } catch (err) {
+                          console.error("Error updating todo:", err);
+                          setError("Failed to update todo. Please try again.");
+                        }
+                      }}
+                    />
+                  </td>
+                  <td className="py-2 px-4 border">{todo.title}</td>
+                  <td className="py-2 px-4 border">
+                    {new Date(todo.deadline).toLocaleString()}
+                  </td>
+                  <td className="py-2 px-4 border">
+                    {getRemainingTime(todo.deadline, todo)}
+                  </td>
+                  <td className="py-2 px-4 border">
+                    {todo.punishment || "No punishment yet"}
+                  </td>
+                  <td className="py-2 px-4 border">
+                    <button
+                      onClick={() => handleDeleteTodo(todo._id)}
+                      className="bg-red-600 text-white px-4 py-2 rounded"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {passwordError && <p className="text-red-500 mt-2">{passwordError}</p>}
+      </div>
+    }
     </div>
   );
 }

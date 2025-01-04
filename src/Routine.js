@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import RoutineTable from "./RoutineTable";
+import Emptydata from "./Emptydata";
 
 function Routine() {
   const [routines, setRoutines] = useState([]);
@@ -84,38 +85,43 @@ function Routine() {
         Add New Routine
       </Link>
 
-      {/* Daily Section */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-2">Daily Routines</h2>
-        <RoutineTable
-          routines={routines}
-          frequency="Daily"
-          handleCheckboxChange={handleCheckboxChange}
-          handleDelete={handleDelete}
-        />
-      </div>
+      {/* Show message if no routines */}
+      {(routines.length === 0)? <Emptydata type="routine" /> :
+        <div>
+          {/* Daily Section */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-2">Daily Routines</h2>
+            <RoutineTable
+              routines={routines}
+              frequency="Daily"
+              handleCheckboxChange={handleCheckboxChange}
+              handleDelete={handleDelete}
+            />
+          </div>
 
-      {/* Weekly Section */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-2">Weekly Routines</h2>
-        <RoutineTable 
-          routines = {routines} 
-          frequency= "Weekly"
-          handleCheckboxChange={handleCheckboxChange} 
-          handleDelete={handleDelete}
-        />
-      </div>
-
-      {/* Monthly Section */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-2">Monthly Routines</h2>
+          {/* Weekly Section */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-2">Weekly Routines</h2>
             <RoutineTable 
               routines = {routines} 
-              frequency = "Monthly"
+              frequency= "Weekly"
               handleCheckboxChange={handleCheckboxChange} 
-              handleDelete={handleDelete} 
+              handleDelete={handleDelete}
             />
-      </div>
+          </div>
+
+          {/* Monthly Section */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-2">Monthly Routines</h2>
+                <RoutineTable 
+                  routines = {routines} 
+                  frequency = "Monthly"
+                  handleCheckboxChange={handleCheckboxChange} 
+                  handleDelete={handleDelete} 
+                />
+          </div>
+        </div>
+      }
     </div>
   );
 }

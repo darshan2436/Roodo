@@ -11,6 +11,7 @@ function AddTodo() {
   const navigate = useNavigate();
 
   //add email to the todo
+  const email = localStorage.getItem("email");
 
   const API_URL = "https://roodobackend-production.up.railway.app/api/todo"; // Backend endpoint
 
@@ -27,6 +28,7 @@ function AddTodo() {
       completedAt: null,
       punishment: "",
       isCompleted: false, // make sure to add this field in database
+      email: email, // add email to the todo
     };
 
     try {
@@ -38,7 +40,7 @@ function AddTodo() {
       setError("");
 
       // Navigate back to the Todo list page after a brief delay
-      setTimeout(() => navigate("/todo"), 1000);
+      setTimeout(() => navigate("/todo"), 500);
     } catch (err) {
       console.error("Error adding todo:", err);
       setError("Failed to add todo. Please try again.");

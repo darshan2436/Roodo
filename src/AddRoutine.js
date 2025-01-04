@@ -6,10 +6,12 @@ function AddRoutine() {
   const [task, setTask] = useState("");
   const [frequency, setFrequency] = useState("Daily");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   //add email to the routine
   const email = localStorage.getItem("email");
+  const API_URL = "https://roodobackend-production.up.railway.app/api/routine"; // Backend endpoint
 
   const handleAddRoutine = async () => {
     if (!task) {
@@ -22,15 +24,15 @@ function AddRoutine() {
       task,
       frequency,
       completed: false, // Default to false
-      // email,
+      email: email, // add email to the routine
     };
 
     try {
       // Send the routine to the backend
-      await axios.post("https://roodobackend-production.up.railway.app/api/routine", newRoutine);
-
-      // Navigate back to the Routine list page
-      navigate("/routine");
+      await axios.post(API_URL, newRoutine);
+      setSuccess(true);
+      setError("");
+      setTimeout(() => navigate("/routine"), 500); // Navigate back to the Routine list page after a brief delay
     } catch (err) {
       console.error("Error adding routine:", err);
       setError("Failed to add routine. Please try again.");
@@ -61,6 +63,7 @@ function AddRoutine() {
         </select>
       </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
+      {success && <p className="text-green-500 mb-4">Routine added successfully!</p>}
       <button
         onClick={handleAddRoutine}
         className="bg-blue-600 text-white px-6 py-3 rounded-lg"

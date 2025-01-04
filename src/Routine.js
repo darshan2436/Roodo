@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import RoutineTable from "./RoutineTable";
 
 function Routine() {
   const [routines, setRoutines] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const API_URL = "https://roodobackend-production.up.railway.app/api/routine";
+  const email = localStorage.getItem("email");
+  
 
   // Fetch routines from the database
   useEffect(() => {
     const fetchRoutines = async () => {
       try {
-        const response = await axios.get(API_URL);
+        const response =  await axios.get(API_URL, {
+          params: { 
+            email : email},
+        });
         if(!response){
           throw new Error("No response from the server");
         }
@@ -37,7 +43,7 @@ function Routine() {
     // Update the database with the new state
     try {
       console.log(updatedRoutines[index]._id);
-      await axios.put(`https://roodobackend-production.up.railway.app/api/routine/${updatedRoutines[index]._id}`, updatedRoutines[index]);
+      await axios.put(`${API_URL}/${updatedRoutines[index]._id}`, updatedRoutines[index]);
     } catch (error) {
       console.error("Error updating routine:", error);
     }
@@ -48,7 +54,7 @@ function Routine() {
     const enteredPassword = prompt("Are sure to delete ? Enter y/Y to confirm:");
     if (enteredPassword === "y" || enteredPassword === "Y") {
       try {
-        await axios.delete(`roodobackend-production.up.railway.app/api/routine/${id}`);
+        await axios.delete(`${API_URL}/${id}`);
         setRoutines(routines.filter((routine) => routine._id !== id));
         alert("Routine deleted successfully!");
       } catch (error) {
@@ -81,131 +87,34 @@ function Routine() {
       {/* Daily Section */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-2">Daily Routines</h2>
-        <table className="min-w-full table-auto border-collapse mb-6">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="py-2 px-4 border">Completed</th>
-              <th className="py-2 px-4 border">Task</th>
-              <th className="py-2 px-4 border">Added</th>
-              <th className="py-2 px-4 border">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/*routine is not updated in the database*/}
-            {routines
-              .filter((routine) => routine.frequency === "Daily")
-              .map((routine, index) => (
-                <tr
-                  key={index}
-                  className={`text-center ${routine.completed ? 'bg-gray-200 text-gray-500 line-through' : 'bg-white'}`}
-                >
-                  <td className="py-2 px-4 border">
-                    <input
-                      type="checkbox"
-                      checked={routine.completed}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  </td>
-                  <td className="py-2 px-4 border">{routine.task}</td>
-                  <td className="py-2 px-4 border">{routine.added.toLocaleString()}</td>
-                  <td className="py-2 px-4 border">
-                    <button
-                      onClick={() => handleDelete(routine._id)}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <RoutineTable
+          routines={routines}
+          frequency="Daily"
+          handleCheckboxChange={handleCheckboxChange}
+          handleDelete={handleDelete}
+        />
       </div>
 
       {/* Weekly Section */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-2">Weekly Routines</h2>
-        <table className="min-w-full table-auto border-collapse mb-6">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="py-2 px-4 border">Completed</th>
-              <th className="py-2 px-4 border">Task</th>
-              <th className="py-2 px-4 border">Added</th>
-              <th className="py-2 px-4 border">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {routines
-              .filter((routine) => routine.frequency === "Weekly")
-              .map((routine, index) => (
-                <tr
-                  key={index}
-                  className={`text-center ${routine.completed ? 'bg-gray-200 text-gray-500 line-through' : 'bg-white'}`}
-                >
-                  <td className="py-2 px-4 border">
-                    <input
-                      type="checkbox"
-                      checked={routine.completed}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  </td>
-                  <td className="py-2 px-4 border">{routine.task}</td>
-                  <td className="py-2 px-4 border">{routine.added.toLocaleString()}</td>
-                  <td className="py-2 px-4 border">
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <RoutineTable 
+          routines = {routines} 
+          frequency= "Weekly"
+          handleCheckboxChange={handleCheckboxChange} 
+          handleDelete={handleDelete}
+        />
       </div>
 
       {/* Monthly Section */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-2">Monthly Routines</h2>
-        <table className="min-w-full table-auto border-collapse mb-6">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="py-2 px-4 border">Completed</th>
-              <th className="py-2 px-4 border">Task</th>
-              <th className="py-2 px-4 border">Added</th>
-              <th className="py-2 px-4 border">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {routines
-              .filter((routine) => routine.frequency === "Monthly")
-              .map((routine, index) => (
-                <tr
-                  key={index}
-                  className={`text-center ${routine.completed ? 'bg-gray-200 text-gray-500 line-through' : 'bg-white'}`}
-                >
-                  <td className="py-2 px-4 border">
-                    <input
-                      type="checkbox"
-                      checked={routine.completed}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  </td>
-                  <td className="py-2 px-4 border">{routine.task}</td>
-                  <td className="py-2 px-4 border">{routine.added.toLocaleString()}</td>
-                  <td className="py-2 px-4 border">
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+            <RoutineTable 
+              routines = {routines} 
+              frequency = "Monthly"
+              handleCheckboxChange={handleCheckboxChange} 
+              handleDelete={handleDelete} 
+            />
       </div>
     </div>
   );

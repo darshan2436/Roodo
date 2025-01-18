@@ -9,6 +9,5 @@
 ### 4. in todo input of date and time are very large make it easy to access
 
 ## new Features in mock:
-### 1.profile page
-### 2.notes taking 
-### 3.descritption of todo
+### 1.notes taking 
+### 2.descritption of todo

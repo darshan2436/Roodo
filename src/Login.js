@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const Login = () => {
+const Login = ({isLoggedIn}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  // Check if user is already logged in
-  const isLoggedIn = localStorage.getItem("authToken"); // or any other method you use to store user info
 
   useEffect(() => {
     if (isLoggedIn) {

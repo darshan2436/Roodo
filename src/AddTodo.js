@@ -48,9 +48,9 @@ function AddTodo() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Add New Todo</h1>
-      <div className="mb-4">
+    <div className="container mx-auto p-4 flex flex-col items-center">
+      <h1 className="text-3xl font-bold mb-4">Add New Todo</h1>
+      <div className="mb-4 custom-width">
         <input
           type="text"
           value={title}
@@ -59,7 +59,7 @@ function AddTodo() {
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 custom-width">
         <input
           type="date"
           value={deadlineDate}
@@ -67,7 +67,7 @@ function AddTodo() {
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 custom-width">
         <input
           type="time"
           value={deadlineTime}
@@ -79,7 +79,7 @@ function AddTodo() {
       {success && <p className="text-green-500 mb-4">Todo added successfully!</p>}
       <button
         onClick={handleAddTodo}
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg"
+        className="bg-blue-600 custom-width text-white px-6 py-3 rounded-lg"
       >
         Add Todo
       </button>

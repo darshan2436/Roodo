@@ -40,9 +40,9 @@ function AddRoutine() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Add New Routine</h1>
-      <div className="mb-4">
+      <div className="mb-4 custom-width">
         <input
           type="text"
           value={task}
@@ -51,7 +51,7 @@ function AddRoutine() {
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 custom-width">
         <select
           value={frequency}
           onChange={(e) => setFrequency(e.target.value)}
@@ -66,7 +66,7 @@ function AddRoutine() {
       {success && <p className="text-green-500 mb-4">Routine added successfully!</p>}
       <button
         onClick={handleAddRoutine}
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg"
+        className="bg-blue-600 text-white px-6 py-3 rounded-lg custom-width"
       >
         Add Routine
       </button>

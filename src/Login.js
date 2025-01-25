@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import ShowHideIcon from "./ShowHideIcon";
 
 const Login = ({isLoggedIn}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isHidden , setIsHidden] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,15 +78,21 @@ const Login = ({isLoggedIn}) => {
             <label htmlFor="password" className="block text-gray-600 font-semibold mb-2">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="flex">
+              <input
+                type={isHidden? "password" : "text"}
+                id="password"
+                className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <ShowHideIcon 
+                isHidden={isHidden}
+                setIsHidden={setIsHidden}
+              />
+            </div>
           </div>
           {/* Error Message */}
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}

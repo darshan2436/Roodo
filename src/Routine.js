@@ -80,7 +80,7 @@ function Routine() {
 
       <Link
         to="/routine/add"
-        className="bg-green-600 text-white px-6 py-3 rounded-lg mb-6 inline-block"
+        className="bg-green-600 text-white px-2 py-1.5 text-custom-button rounded-lg mb-6 inline-block"
       >
         Add New Routine
       </Link>

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities{
+    .text-custom-responsive{
+        @apply text-xl md:text-3xl lg:text-5xl
+    } 
+
+    .text-custom-button{
+        @apply text-lg md:text-xl lg:text-2xl
+    }
+}

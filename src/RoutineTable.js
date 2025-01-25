@@ -1,45 +1,96 @@
-function RoutineTable({routines , frequency  , handleCheckboxChange, handleDelete}) {
-    
-    return (
-        <table className="min-w-full table-auto border-collapse mb-6">
+import React from "react";
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+  return {
+    date: date.toLocaleDateString(),
+    time: date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  };
+}
+function RoutineTable({
+  routines,
+  frequency,
+  handleCheckboxChange,
+  handleDelete,
+}) {
+  return (
+    <div className="w-full-mx-4 ">
+      <div className="overflow-x-auto shadow-sm">
+        <table className="w-full table-fixed border-collapse ">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="py-2 px-4 border">Completed</th>
-              <th className="py-2 px-4 border">Task</th>
-              <th className="py-2 px-4 border">Added</th>
-              <th className="py-2 px-4 border">Action</th>
+            <tr className="bg-gray-100">
+              <th className="w-[12%] sm:w-[15%] py-3 px-2 sm:px-4 border-b text-left font-medium text-gray-700 text-sm sm:text-base">
+                Done
+              </th>
+              <th className="w-[38%] sm:w-[40%] py-3 px-2 sm:px-4 border-b text-left font-medium text-gray-700 text-sm sm:text-base">
+                Title
+              </th>
+              <th className="w-[35%] sm:w-[30%] py-3 px-2 sm:px-4 border-b text-left font-medium text-gray-700 text-sm sm:text-base hidden sm:table-cell">
+                Added
+              </th>
+              <th className="w-[15%] py-3 px-2 sm:px-4 border-b text-left font-medium text-gray-700 text-sm sm:text-base">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {routines
               .filter((routine) => routine.frequency === frequency)
-              .map((routine, index) => (
-                <tr
-                  key={index}
-                  className={`text-center ${routine.completed ? 'bg-gray-200 text-gray-500 line-through' : 'bg-white'}`}
-                >
-                  <td className="py-2 px-4 border">
-                    <input
-                      type="checkbox"
-                      checked={routine.completed}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  </td>
-                  <td className="py-2 px-4 border">{routine.task}</td>
-                  <td className="py-2 px-4 border">{routine.added.toLocaleString()}</td>
-                  <td className="py-2 px-4 border">
-                    <button
-                      onClick={() => handleDelete(routine._id)}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg"
+              .map((routine, index) => {
+                const { date, time } = formatDateTime(routine.added);
+                return (
+                  <tr
+                    key={index}
+                    className={`border-b ${routine.completed ? "bg-gray-50 text-gray-500" : "bg-white"} hover:bg-gray-50`}
+                  >
+                    <td className="py-3 px-2 sm:px-4">
+                      <input
+                        type="checkbox"
+                        checked={routine.completed}
+                        onChange={() => handleCheckboxChange(index)}
+                        className="h-4 w-4 rounded border-gray-300 cursor-pointer"
+                      />
+                    </td>
+                    <td
+                      className={`py-3 px-2 sm:px-4 ${routine.completed ? "line-through" : ""}`}
                     >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                      <div className="truncate text-sm sm:text-base">
+                        {routine.task}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1 sm:hidden">
+                        {date} {time}
+                      </div>
+                    </td>
+                    <td className="py-3 px-2 sm:px-4 hidden sm:table-cell">
+                      <div className="text-sm text-gray-600">
+                        <span className="block">{date}</span>
+                        <span className="text-gray-500">{time}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-2 sm:px-4">
+                      <button
+                        onClick={() => handleDelete(routine._id)}
+                        className="w-full bg-red-600 hover:bg-red-700 text-white px-2 sm:px-3 py-1.5 rounded text-xs sm:text-sm transition-colors"
+                        aria-label="Delete routine"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
-    )
+      </div>
+      {routines.filter((routine) => routine.frequency === frequency).length ===
+        0 && (
+        <div className="text-center py-4 text-gray-500 text-sm sm:text-base">
+          No routines found for this frequency
+        </div>
+      )}
+    </div>
+  );
 }
-
 export default RoutineTable;

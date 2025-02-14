@@ -52,6 +52,24 @@ function Todo() {
     fetchTodos();
   }, []);
 
+  // const disableCheckbox = ()=>{
+  //   todos.map((todo)=>{
+  //     const now = new Date();
+  //     const diff = new Date(todo.deadline) - now;
+  //       const updatedTodo = {
+  //         ...todo,
+  //         isDisabled:(diff < 0)?  true: false
+  //       }
+  //       console.log(updatedTodo)
+  //       setTodos(
+  //         todos.map((t) => (t._id === todo._id ? updatedTodo : t))
+  //       )
+  //       console.log(todos);
+  //       console.log(todos)
+  //     }
+  //   )
+  // }
+
   // Assign a punishment randomly when the time is up
   const assignPunishment = async (todo) => {
     const randomPunishment = punishments[Math.floor(Math.random() * punishments.length)];
@@ -99,7 +117,10 @@ function Todo() {
       if (!todo.punishment) {
         assignPunishment(todo);
       }
-      return "Time's up!";
+      return {
+        text:"Time's up!",
+        expired:true
+      };
     }
 
     const days = Math.floor(diff / (1000 * 3600 * 24));
@@ -107,7 +128,10 @@ function Todo() {
     const minutes = Math.floor((diff % (1000 * 3600)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    return {
+      text:`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`,
+      expired :false
+    };
   };
 
   if (loading) {
@@ -170,23 +194,25 @@ function Todo() {
               type="checkbox"
               checked={todo.isCompleted}
               onChange={async () => {
-                try {
-                  const updatedTodo = {
-                    ...todo,
-                    isCompleted: !todo.isCompleted,
-                  };
-                  await axios.put(`${API_URL}/${todo._id}`, updatedTodo);
-                  setTodos(
-                    todos.map((t) =>
-                      t._id === todo._id ? updatedTodo : t
-                    )
-                  );
-                } catch (err) {
-                  console.error("Error updating todo:", err);
-                  setError("Failed to update todo. Please try again.");
-                }
+                  try {
+                    const updatedTodo = {
+                      ...todo,
+                      isCompleted: !todo.isCompleted,
+                    };
+                    await axios.put(`${API_URL}/${todo._id}`, updatedTodo);
+                    setTodos(
+                      todos.map((t) =>
+                        t._id === todo._id ? updatedTodo : t
+                      )
+                    );
+                  } catch (err) {
+                    console.error("Error updating todo:", err);
+                    setError("Failed to update todo. Please try again.");
+                  }
+                
               }}
               className="h-4 w-4 rounded border-gray-300 cursor-pointer"
+              disabled = {remainingTime.expired}
             />
           </td>
           <td
@@ -209,7 +235,7 @@ function Todo() {
             </div>
           </td>
           <td className="py-3 px-2 sm:px-4 hidden sm:table-cell text-sm text-gray-600">
-            {remainingTime}
+            {remainingTime.text}
           </td>
           <td className="py-3 px-2 sm:px-4 hidden sm:table-cell text-sm text-red-500">
             {todo.punishment || "No punishment"}

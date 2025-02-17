@@ -43,7 +43,6 @@ function Routine() {
 
     // Update the database with the new state
     try {
-      console.log(updatedRoutines[index]._id);
       await axios.put(`${API_URL}/${updatedRoutines[index]._id}`, updatedRoutines[index]);
     } catch (error) {
       console.error("Error updating routine:", error);

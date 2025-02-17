@@ -34,7 +34,6 @@ function AddTodo() {
     try {
       // Send POST request to the backend
       const response = await axios.post(API_URL, newTodo);
-      console.log("Todo added successfully:", response.data);
 
       setSuccess(true);
       setError("");

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 function Emptydata({type}) {
   const link = `/${type}/add`
-  console.log(link)
   return (
     <div className="flex flex-col items-center">
         <h1 className="text-custom-responsive text-red-500">No {type} to display</h1>

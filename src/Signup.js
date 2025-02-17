@@ -38,10 +38,7 @@ function Signup() {
       const data = await response.json();
 
       if (response.ok) {
-        // If signup is successful, redirect to login or show success message
-        console.log('Signup successful:', data);
-        // You can redirect to login page or show a success message
-        window.location.href = '/login'; // Redirect to login page after successful signup
+        window.location.href = '/login'; 
       } else {
         // Handle errors, display error message
         setError(data.message || 'Signup failed');

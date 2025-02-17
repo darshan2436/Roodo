@@ -49,7 +49,7 @@ function RoutineTable({
                       <input
                         type="checkbox"
                         checked={routine.completed}
-                        onChange={() => handleCheckboxChange(index)}
+                        onChange={() => handleCheckboxChange(routine)}
                         className="h-4 w-4 rounded border-gray-300 cursor-pointer"
                       />
                     </td>

@@ -36,14 +36,18 @@ function Routine() {
 
 
   // Handle checkbox click to update completed state locally
-  const handleCheckboxChange = async (index) => {
-    const updatedRoutines = [...routines];
-    updatedRoutines[index].completed = !updatedRoutines[index].completed;
-    setRoutines(updatedRoutines);
+  const handleCheckboxChange = async (routine) => {
+    const updatedRoutine ={
+      ...routine,
+      completed: !routine.completed
+    }
+    setRoutines(
+      routines.map((t) => (t._id === routine._id ? updatedRoutine : t))
+    );
 
     // Update the database with the new state
     try {
-      await axios.put(`${API_URL}/${updatedRoutines[index]._id}`, updatedRoutines[index]);
+      await axios.put(`${API_URL}/${updatedRoutine._id}`, updatedRoutine);
     } catch (error) {
       console.error("Error updating routine:", error);
     }

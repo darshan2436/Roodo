@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import RoutineTable from "./RoutineTable";
 import Emptydata from "./Emptydata";
+import LoadingScreen from "./LoadingScreen";
 
 function Routine() {
   const [routines, setRoutines] = useState([]);
@@ -70,7 +71,7 @@ function Routine() {
   };
 
   if (loading) {
-    return <p>Loading todos...</p>;
+    return <LoadingScreen />;
   }
 
   if (error) {

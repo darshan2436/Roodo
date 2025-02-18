@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Emptydata from "./Emptydata";
+import LoadingScreen from "./LoadingScreen";
 
 function formatDateTime(dateString) {
   const date = new Date(dateString);
@@ -52,24 +53,6 @@ function Todo() {
     fetchTodos();
   }, []);
 
-  // const disableCheckbox = ()=>{
-  //   todos.map((todo)=>{
-  //     const now = new Date();
-  //     const diff = new Date(todo.deadline) - now;
-  //       const updatedTodo = {
-  //         ...todo,
-  //         isDisabled:(diff < 0)?  true: false
-  //       }
-  //       console.log(updatedTodo)
-  //       setTodos(
-  //         todos.map((t) => (t._id === todo._id ? updatedTodo : t))
-  //       )
-  //       console.log(todos);
-  //       console.log(todos)
-  //     }
-  //   )
-  // }
-
   // Assign a punishment randomly when the time is up
   const assignPunishment = async (todo) => {
     const randomPunishment = punishments[Math.floor(Math.random() * punishments.length)];
@@ -106,8 +89,6 @@ function Todo() {
     }
   };
 
-  // add isCompleted field to the database
-
   // Calculate remaining time
   const getRemainingTime = (deadline, todo) => {
     const now = new Date();
@@ -135,7 +116,7 @@ function Todo() {
   };
 
   if (loading) {
-    return <p>Loading todos...</p>;
+    return <LoadingScreen />;
   }
 
   if (error) {

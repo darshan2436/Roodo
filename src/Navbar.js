@@ -31,11 +31,11 @@ function Navbar() {
     }
     fetchName();
   },[])
-  
+
   return (
     <nav className='flex justify-between'>
         <Link to="/"><img className='w-20' src="https://i.ibb.co/1z5jFTg/Black-White-Elegant-Monogram-Initial-Name-Logo.png" alt="Black-White-Elegant-Monogram-Initial-Name-Logo"/></Link>
-        <Link to='/profile' className='flex m-2'><User className="size-8 border border-black rounded-2xl text-gray-400" />{name}</Link>
+        <Link to='/profile' className='flex m-2'><User className="size-8 border border-black rounded-2xl text-gray-400" /><p className="hidden md:block ">{name}</p></Link>
     </nav>
   );
 }

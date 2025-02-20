@@ -15,7 +15,6 @@ import Profile from './components/ui/Profile';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('user')? true : false);
 
-
   return (
     <div className="App">
       <Router>

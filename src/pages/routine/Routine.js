@@ -4,36 +4,24 @@ import axios from "axios";
 import RoutineTable from "./RoutineTable";
 import Emptydata from "../../components/ui/Emptydata";
 import LoadingScreen from "../../components/ui/LoadingScreen";
+import fetchData from "../../feature/fetchData"
+const API_URL = `${process.env.API_URL}/routine`;
 
 function Routine() {
   const [routines, setRoutines] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const API_URL = "https://roodobackend-production.up.railway.app/api/routine";
   const email = localStorage.getItem("email");
   
 
   // Fetch routines from the database
   useEffect(() => {
-    const fetchRoutines = async () => {
-      try {
-        const response =  await axios.get(API_URL, {
-          params: { 
-            email : email},
-        });
-        if(!response){
-          throw new Error("No response from the server");
-        }
-        setRoutines(response.data);
-        setLoading(false);
-      } catch (err) {
-        Error("Failed to fetch routines. Please try again.");
-        setLoading(false);
-        setError(err.message + " in database" || "Failed to fetch routines. Please try again.");
-      }
+    if(!email){
+      setLoading(false);
+      return;
     };
-    fetchRoutines();
-  }, []);
+    fetchData("routine" , email , setRoutines , setLoading , setError);
+  }, [email]);
 
 
   // Handle checkbox click to update completed state locally
@@ -51,22 +39,6 @@ function Routine() {
       await axios.put(`${API_URL}/${updatedRoutine._id}`, updatedRoutine);
     } catch (error) {
       console.error("Error updating routine:", error);
-    }
-  };
-
-  // Handle routine deletion with password confirmation
-  const handleDelete = async (id) => {
-    const enteredPassword = prompt("Are sure to delete ? Enter y/Y to confirm:");
-    if (enteredPassword === "y" || enteredPassword === "Y") {
-      try {
-        await axios.delete(`${API_URL}/${id}`);
-        setRoutines(routines.filter((routine) => routine._id !== id));
-        alert("Routine deleted successfully!");
-      } catch (error) {
-        console.error("Error deleting routine:", error);
-      }
-    } else {
-      alert("Routine deletion cancelled.");
     }
   };
 
@@ -97,9 +69,10 @@ function Routine() {
             <h2 className="text-xl font-bold mb-2">Daily Routines</h2>
             <RoutineTable
               routines={routines}
+              setRoutines={setRoutines}
               frequency="Daily"
               handleCheckboxChange={handleCheckboxChange}
-              handleDelete={handleDelete}
+              setError={setError}
             />
           </div>
 
@@ -108,9 +81,10 @@ function Routine() {
             <h2 className="text-xl font-bold mb-2">Weekly Routines</h2>
             <RoutineTable 
               routines = {routines} 
+              setRoutines={setRoutines}
               frequency= "Weekly"
-              handleCheckboxChange={handleCheckboxChange} 
-              handleDelete={handleDelete}
+              handleCheckboxChange={handleCheckboxChange}
+              setError={setError}
             />
           </div>
 
@@ -119,9 +93,10 @@ function Routine() {
             <h2 className="text-xl font-bold mb-2">Monthly Routines</h2>
                 <RoutineTable 
                   routines = {routines} 
+                  setRoutines={setRoutines}
                   frequency = "Monthly"
                   handleCheckboxChange={handleCheckboxChange} 
-                  handleDelete={handleDelete} 
+                  setError={setError}
                 />
           </div>
         </div>

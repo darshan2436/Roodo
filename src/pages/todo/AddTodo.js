@@ -33,7 +33,7 @@ function AddTodo() {
 
     try {
       // Send POST request to the backend
-      const response = await axios.post(API_URL, newTodo);
+      await axios.post(API_URL, newTodo);
 
       setSuccess(true);
       setError("");

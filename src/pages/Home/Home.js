@@ -7,7 +7,7 @@ function Home({setIsLoggedIn , isLoggedIn }) {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     setIsLoggedIn(!!token); // If token exists, set isLoggedIn to true
-  }, []);
+  }, [setIsLoggedIn]);
 
   return (
     <div className=" flex flex-col items-center ">

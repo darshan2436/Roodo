@@ -1,4 +1,6 @@
 import React from "react";
+import handleDeleteData from "../../feature/deleteData";
+
 function formatDateTime(dateString) {
   const date = new Date(dateString);
   return {
@@ -11,9 +13,10 @@ function formatDateTime(dateString) {
 }
 function RoutineTable({
   routines,
+  setRoutines,
   frequency,
   handleCheckboxChange,
-  handleDelete,
+  setError,
 }) {
   return (
     <div className="w-full-mx-4 ">
@@ -71,7 +74,7 @@ function RoutineTable({
                     </td>
                     <td className="py-3 px-2 sm:px-4">
                       <button
-                        onClick={() => handleDelete(routine._id)}
+                        onClick={() => handleDeleteData(routine._id , "routine" , setRoutines , routines , setError)}
                         className="w-full bg-red-600 hover:bg-red-700 text-white px-2 sm:px-3 py-1.5 rounded text-xs sm:text-sm transition-colors"
                         aria-label="Delete routine"
                       >

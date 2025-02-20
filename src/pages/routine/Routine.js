@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import RoutineTable from "./RoutineTable";
-import Emptydata from "./Emptydata";
-import LoadingScreen from "./LoadingScreen";
+import Emptydata from "../../components/ui/Emptydata";
+import LoadingScreen from "../../components/ui/LoadingScreen";
 
 function Routine() {
   const [routines, setRoutines] = useState([]);

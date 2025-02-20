@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Emptydata from "./Emptydata";
-import LoadingScreen from "./LoadingScreen";
+import Emptydata from "../../components/ui/Emptydata";
+import LoadingScreen from "../../components/ui/LoadingScreen";
 
 function formatDateTime(dateString) {
   const date = new Date(dateString);

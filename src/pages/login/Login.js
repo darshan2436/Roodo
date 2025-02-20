@@ -1,7 +1,7 @@
 import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import ShowHideIcon from "./ShowHideIcon";
+import ShowHideIcon from "../../feature/ShowHideIcon";
 
 const Login = ({isLoggedIn}) => {
   const [email, setEmail] = useState("");

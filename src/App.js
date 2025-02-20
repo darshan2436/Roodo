@@ -1,16 +1,16 @@
-import './App.css';
+import './assets/App.css';
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from './Login';
-import Signup from './Signup';
-import Home from './Home';
-import Routine from './Routine';
-import Todo from './Todo';
-import AddTodo from './AddTodo';
-import AddRoutine from './AddRoutine';
-import Navbar from './Navbar';
-import NotFound from './NotFound';
-import Profile from './Profile';
+import Login from './pages/login/Login';
+import Signup from './pages/login/Signup';
+import Home from './pages/Home/Home';
+import Routine from './pages/routine/Routine';
+import Todo from './pages/todo/Todo';
+import AddTodo from './pages/todo/AddTodo';
+import AddRoutine from './pages/routine/AddRoutine';
+import Navbar from './components/ui/Navbar';
+import NotFound from './components/ui/NotFound';
+import Profile from './components/ui/Profile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('user')? true : false);
